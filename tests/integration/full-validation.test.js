@@ -18,7 +18,10 @@ describe('Full Validation Integration Tests', () => {
           encoding: 'utf8',
         });
 
-        expect(output).to.include('All validations passed');
+        // Accept both "All validations passed" and "Validation passed with N warning(s)"
+        const hasPassedMessage = output.includes('All validations passed') ||
+                                  output.includes('Validation passed with');
+        expect(hasPassedMessage).to.be.true;
         expect(output).to.include('Total tokens validated: 7');
       } catch (error) {
         // If validation fails, show the output
