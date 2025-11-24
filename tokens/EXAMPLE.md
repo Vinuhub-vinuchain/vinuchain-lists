@@ -35,6 +35,8 @@ The JSON file must contain the following structure:
   "name": "Vita Inu",
   "address": "0x00c1E515EA9579856304198EFb15f525A0bb50f6",
   "decimals": 18,
+  "description": "Bridged VINU on VinuChain, bringing the vibrant community and innovative features of Vita Inu to the VinuChain ecosystem.",
+  "project": "vinu",
   "logoURI": "https://vinuexplorer.org/icons/vitainu.svg",
   "website": "https://vitainu.org",
   "support": "hello@vitainu.org",
@@ -43,7 +45,21 @@ The JSON file must contain the following structure:
   "telegram": "https://t.me/vitainu",
   "discord": "https://discord.gg/vinu",
   "coingecko": "https://www.coingecko.com/en/coins/vita-inu",
-  "coinmarketcap": "https://coinmarketcap.com/currencies/vita-inu/"
+  "coinmarketcap": "https://coinmarketcap.com/currencies/vita-inu/",
+  "medium": "https://medium.com/vitainu",
+  "linkedin": "https://linkedin.com/company/vinufoundation",
+  "instagram": "https://instagram.com/vitainucoin",
+  "facebook": "https://facebook.com/vitainucoin",
+  "reddit": "https://reddit.com/r/vitainu",
+  "youtube": "https://youtube.com/c/vitainucoin",
+  "redFlags": [
+    {
+      "severity": "low",
+      "description": "Contract not verified on explorer",
+      "evidence": "https://vinuexplorer.org/address/0x00c1E515EA9579856304198EFb15f525A0bb50f6",
+      "reportedDate": "2024-01-15"
+    }
+  ]
 }
 ```
 
@@ -58,6 +74,14 @@ The JSON file must contain the following structure:
 
 ### Optional Fields
 
+- **description**: Brief description of the token and its purpose
+  - Length: 10-500 characters
+  - Example: "Bridged VINU on VinuChain, bringing the vibrant community and innovative features of Vita Inu to the VinuChain ecosystem."
+
+- **project**: Reference to associated smart contract project in `contracts/` directory
+  - Format: lowercase slug (e.g., "vinuswap")
+  - Must match an existing project in the contracts directory
+
 - **logoURI**: HTTPS URL to token logo image
   - Recommended: 200x200px PNG with transparent background
   - Maximum: 512x512px
@@ -66,6 +90,8 @@ The JSON file must contain the following structure:
 - **website**: Official project website (HTTPS URL)
 
 - **support**: Support/contact email address
+  - Must be a valid email format
+  - Disposable email domains are blocked
 
 - **github**: GitHub repository or organization URL
   - Format: `https://github.com/username/repo` or `https://github.com/org`
@@ -85,8 +111,28 @@ The JSON file must contain the following structure:
 - **coinmarketcap**: CoinMarketCap listing URL
   - Format: `https://coinmarketcap.com/currencies/token-name/`
 
+- **medium**: Medium blog or publication URL
+  - Format: `https://medium.com/publication-name`
+
+- **linkedin**: LinkedIn company or profile URL
+  - Format: `https://linkedin.com/company/name` or `https://linkedin.com/in/profile`
+
+- **instagram**: Instagram profile URL
+  - Format: `https://instagram.com/username`
+
+- **facebook**: Facebook page URL
+  - Format: `https://facebook.com/pagename`
+
+- **reddit**: Reddit community URL
+  - Format: `https://reddit.com/r/subredditname`
+
+- **youtube**: YouTube channel URL
+  - Format: `https://youtube.com/c/channelname` or `https://youtube.com/@handle`
+
 - **redFlags**: Array of security warnings (use sparingly, with evidence)
-  - Example: `["Unverified contract", "No audit available"]`
+  - Each flag must include: severity, description, and optionally evidence and reportedDate
+  - Severity levels: critical, high, medium, low, info
+  - Example structure shown in complete example above
 
 ## Validation
 
