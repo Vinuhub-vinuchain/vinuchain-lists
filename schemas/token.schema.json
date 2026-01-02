@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://github.com/VinuChain/vinuchain-lists/schemas/token.schema.json",
   "title": "Token",
-  "description": "Schema for VinuChain token entries",
+  "description": "Schema for VinuChain token entries. NOTE: A logo file ({address}.png/jpg/webp) is REQUIRED in the token directory alongside this JSON file.",
   "type": "object",
   "required": [
     "symbol",
@@ -50,7 +50,7 @@
     },
     "logoURI": {
       "type": "string",
-      "description": "HTTPS URL to token logo image (recommended 200x200px PNG with transparency)",
+      "description": "Optional external HTTPS URL to token logo (physical logo file in directory is REQUIRED - see schema description)",
       "pattern": "^https://[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*(/[^\\s]*)?$",
       "maxLength": 500
     },

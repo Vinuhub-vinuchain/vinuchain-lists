@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-03
+
+### Added
+
+#### Logo File Requirement
+- **BREAKING:** Token submissions now require a logo file (`{address}.png/jpg/webp`)
+- New `logo-validator.js` module validates:
+  - Logo file existence (required)
+  - File size limits (warning >100KB, error >500KB)
+  - Magic byte validation (file content matches extension)
+- 23 new unit tests for logo validation
+- Downloaded logos for all 7 existing tokens from their `logoURI` URLs
+
+#### Documentation Updates
+- Updated README.md with logo requirements and specifications
+- Updated token submission issue template (logo now required)
+- Updated `tokens/EXAMPLE.md` with logo file documentation
+- Updated token schema description to note logo requirement
+
+### Changed
+- Token validation now checks for logo file before validating other fields
+- `logoURI` field is now optional (physical logo file is required instead)
+
 ## [1.0.0] - 2025-11-23
 
 ### Added

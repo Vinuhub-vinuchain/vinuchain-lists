@@ -66,7 +66,7 @@ npm test
 
 ```bash
 npm run validate           # Validate tokens and contracts
-npm test                   # Run all 181 tests
+npm test                   # Run all 204 tests
 npm run test:unit          # Run unit tests only
 npm run test:security      # Run security tests only
 npm run test:integration   # Run integration tests only
@@ -81,7 +81,8 @@ npm run test:all           # Run validation + all tests
 vinuchain-lists/
 ├── tokens/                     # Token registry (7 tokens)
 │   └── {address}/              # EIP-55 checksummed address
-│       └── {address}.json      # Token metadata
+│       ├── {address}.json      # Token metadata
+│       └── {address}.png       # Token logo (REQUIRED - .png/.jpg/.webp)
 │
 ├── contracts/                  # Contract project registry (1 project)
 │   └── {project-slug}/         # Project directory
@@ -105,10 +106,11 @@ vinuchain-lists/
 │   └── validators/             # Specialized validators
 │       ├── email-validator.js  # Email domain validation
 │       ├── abi-validator.js    # ABI structure validation
-│       └── solidity-validator.js# Solidity security patterns
+│       ├── solidity-validator.js# Solidity security patterns
+│       └── logo-validator.js   # Logo file validation
 │
-└── tests/                      # Comprehensive test suite (181 tests)
-    ├── unit/                   # Unit tests (103 tests)
+└── tests/                      # Comprehensive test suite (204 tests)
+    ├── unit/                   # Unit tests (126 tests)
     ├── integration/            # Integration tests (6 tests)
     └── security/               # Security tests (72 tests)
 ```
@@ -164,7 +166,24 @@ To add a new contract to an existing project (e.g., `vinuswap`):
 
 ## Token Submission Guide
 
-### Required Fields
+### Required Files
+
+Each token submission requires **two files** in `tokens/{address}/`:
+
+1. **`{address}.json`** - Token metadata (see fields below)
+2. **`{address}.png`** - Token logo image (required)
+
+### Logo Requirements
+
+| Attribute | Requirement |
+|-----------|-------------|
+| **Filename** | Must match token address: `{address}.png`, `{address}.jpg`, or `{address}.webp` |
+| **Format** | PNG (preferred), JPG, or WebP |
+| **Dimensions** | 200x200px recommended (square aspect ratio) |
+| **File Size** | Max 100KB recommended, 500KB hard limit |
+| **Background** | Transparent preferred (PNG) |
+
+### Required JSON Fields
 
 ```json
 {
@@ -362,15 +381,18 @@ allTokens.forEach(token => {
 
 ### Token Requirements
 
-**Required Fields:**
+**Required Files:**
+- **Logo file** - `{address}.png`, `{address}.jpg`, or `{address}.webp` (max 500KB, 200x200px recommended)
+
+**Required JSON Fields:**
 - `symbol` - Uppercase alphanumeric (1-20 characters)
 - `name` - Token name (1-100 characters)
 - `address` - EIP-55 checksummed Ethereum address (NOT zero address)
 - `decimals` - Integer (0-77, values > 18 show warning)
 
-**Optional Fields:**
+**Optional JSON Fields:**
 - `project` - Reference to contracts/{project-slug} if token has contracts
-- `logoURI` - HTTPS URL to logo image (follows Uniswap Token Lists standard)
+- `logoURI` - Optional external HTTPS URL to logo (physical file is REQUIRED)
 - `website` - Official website (HTTPS only)
 - `support` - Support email (blocks disposable email domains)
 - `github`, `twitter`, `telegram`, `discord` - Social links (HTTPS only)
@@ -423,6 +445,7 @@ allTokens.forEach(token => {
    ```
 
 2. **Ensure all checks pass:**
+   - ✅ Logo file exists (`{address}.png/jpg/webp`, max 500KB)
    - ✅ EIP-55 checksum is correct
    - ✅ All URLs use HTTPS
    - ✅ Email domains are legitimate (no temp mail)
@@ -577,6 +600,7 @@ VinuChain Lists uses a **modular architecture** for maintainability and testabil
 - `email-validator.js` - Email domain validation
 - `abi-validator.js` - Comprehensive ABI structure validation
 - `solidity-validator.js` - Solidity security pattern detection
+- `logo-validator.js` - Logo file existence and format validation
 
 **Core:**
 - `validate.js` - Orchestrator that coordinates all validation

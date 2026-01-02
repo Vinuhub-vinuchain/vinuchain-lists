@@ -15,6 +15,7 @@ body:
         - The token is deployed on VinuChain
         - The contract address is EIP-55 checksummed
         - All information provided is accurate
+        - **You have a logo file ready** (PNG/JPG/WebP, 200x200px, max 500KB)
 
   - type: markdown
     attributes:
@@ -60,16 +61,29 @@ body:
   - type: markdown
     attributes:
       value: |
-        ### Optional Information
+        ### Logo (REQUIRED)
 
-  - type: input
+        **Drag and drop your logo file** into the textarea below to upload it. GitHub will generate a URL.
+
+        **Logo Requirements:**
+        - Format: PNG (preferred), JPG, or WebP
+        - Dimensions: 200x200px recommended (square aspect ratio)
+        - File size: Max 500KB (under 100KB preferred)
+        - Background: Transparent preferred (PNG)
+
+  - type: textarea
     id: logo
     attributes:
-      label: Logo URI
-      description: HTTPS URL to token logo (recommended 200x200px PNG with transparency)
-      placeholder: "https://example.com/logo.png"
+      label: Logo File
+      description: Drag and drop your logo file here - GitHub will upload it and generate a URL
+      placeholder: "Drag and drop your logo file here..."
     validations:
-      required: false
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Optional Information
 
   - type: input
     id: website
@@ -172,6 +186,8 @@ body:
         - label: The contract is verified on the VinuChain block explorer
           required: true
         - label: The contract address is EIP-55 checksummed
+          required: true
+        - label: I have uploaded a valid logo file (PNG/JPG/WebP, max 500KB)
           required: true
         - label: All information provided is accurate and up-to-date
           required: true

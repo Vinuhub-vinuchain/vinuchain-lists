@@ -40,6 +40,7 @@ const {
 const { validateEmail } = require('./validators/email-validator');
 const { validateABI } = require('./validators/abi-validator');
 const { validateSolidityFile } = require('./validators/solidity-validator');
+const { validateLogo } = require('./validators/logo-validator');
 
 const logger = require('./utils/logger');
 
@@ -176,6 +177,17 @@ function validateTokens(tokensDir) {
       logger.warn(
         `  ${tokenData.symbol}: Unusual decimals (${tokenData.decimals}) - verify this is correct`
       );
+    }
+
+    // Validate logo file exists and meets requirements
+    const tokenDirPath = path.join(tokensDir, addressDir);
+    const logoValidation = validateLogo(tokenDirPath, tokenData.address, tokenData.symbol);
+    if (!logoValidation.valid) {
+      logger.error(`  ${logoValidation.error}`);
+      continue;
+    }
+    if (logoValidation.warnings) {
+      logoValidation.warnings.forEach(w => logger.warn(`  ${w}`));
     }
 
     // Check for duplicate addresses

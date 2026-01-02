@@ -4,13 +4,28 @@ This is an example of how to structure a token entry in the VinuChain Tokens Lis
 
 ## Directory Structure
 
-Each token must have its own directory named by its EIP-55 checksummed contract address:
+Each token must have its own directory named by its EIP-55 checksummed contract address, containing both the JSON metadata file and the **required logo file**:
 
 ```
 tokens/
 └── 0x00c1E515EA9579856304198EFb15f525A0bb50f6/
-    └── 0x00c1E515EA9579856304198EFb15f525A0bb50f6.json
+    ├── 0x00c1E515EA9579856304198EFb15f525A0bb50f6.json   # Token metadata
+    └── 0x00c1E515EA9579856304198EFb15f525A0bb50f6.png    # Logo file (REQUIRED)
 ```
+
+## Logo Requirements
+
+A logo file is **required** for every token submission.
+
+| Attribute | Requirement |
+|-----------|-------------|
+| **Filename** | Must match token address: `{address}.png`, `{address}.jpg`, or `{address}.webp` |
+| **Format** | PNG (preferred), JPG, or WebP |
+| **Dimensions** | 200x200px recommended (square aspect ratio) |
+| **File Size** | Max 100KB recommended, 500KB hard limit |
+| **Background** | Transparent preferred (PNG) |
+
+**Example filename:** `0x00c1E515EA9579856304198EFb15f525A0bb50f6.png`
 
 ## File Content
 
@@ -82,10 +97,9 @@ The JSON file must contain the following structure:
   - Format: lowercase slug (e.g., "vinuswap")
   - Must match an existing project in the contracts directory
 
-- **logoURI**: HTTPS URL to token logo image
-  - Recommended: 200x200px PNG with transparent background
-  - Maximum: 512x512px
-  - File size: < 100KB recommended
+- **logoURI**: Optional external HTTPS URL to token logo (the physical logo file in the directory is REQUIRED - see Logo Requirements above)
+  - Use this for external references only
+  - The physical logo file `{address}.png/jpg/webp` is what gets validated
 
 - **website**: Official project website (HTTPS URL)
 
@@ -144,6 +158,9 @@ npm run validate
 ```
 
 The validation script will check:
+- ✅ Logo file exists (`{address}.png/jpg/webp`)
+- ✅ Logo file size is valid (max 500KB, warning if >100KB)
+- ✅ Logo file format matches extension (magic bytes)
 - ✅ Directory name matches address
 - ✅ Filename matches address
 - ✅ Address in JSON matches directory/filename
@@ -155,25 +172,31 @@ The validation script will check:
 
 ## Common Mistakes to Avoid
 
-1. **Wrong directory structure**
+1. **Missing logo file**
+   ```
+   ❌ tokens/0xAddress/0xAddress.json (only)
+   ✅ tokens/0xAddress/0xAddress.json + 0xAddress.png
+   ```
+
+2. **Wrong directory structure**
    ```
    ❌ tokens/vinu/0xAddress.json
    ✅ tokens/0xAddress/0xAddress.json
    ```
 
-2. **Filename doesn't match directory**
+3. **Filename doesn't match directory**
    ```
    ❌ tokens/0xAddress/token.json
    ✅ tokens/0xAddress/0xAddress.json
    ```
 
-3. **Address not checksummed**
+4. **Address not checksummed**
    ```
    ❌ "address": "0x00c1e515ea9579856304198efb15f525a0bb50f6"
    ✅ "address": "0x00c1E515EA9579856304198EFb15f525A0bb50f6"
    ```
 
-4. **Address mismatch**
+5. **Address mismatch**
    ```json
    // Directory: tokens/0x00c1E515EA9579856304198EFb15f525A0bb50f6/
    {
